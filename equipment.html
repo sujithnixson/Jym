@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="equipmentApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="EquipmentController as ctrl">
+    <header>
+        <h1>Gym Management</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="equipment.html">Equipment</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Equipment Management</h1>
+        <form ng-submit="ctrl.addEquipment()">
+            <label for="equipment-name">Equipment Name:</label>
+            <input type="text" id="equipment-name" ng-model="ctrl.newEquipment.name" required>
+            <label for="status">Status:</label>
+            <select id="status" ng-model="ctrl.newEquipment.status" required>
+                <option value="available">Available</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="out-of-order">Out of Order</option>
+            </select>
+            <button type="submit">Add Equipment</button>
+        </form>
+
+        <div class="search-container">
+            <label for="search">Search:</label>
+            <input type="text" id="search" ng-model="ctrl.searchQuery" placeholder="Search equipment">
+            <button ng-click="ctrl.search()">Search</button>
+        </div>
+        
+        <h3>Equipment List</h3>
+        <table id="equipment-table">
+            <thead>
+                <tr>
+                    <th>Equipment Name</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="equipment in ctrl.equipmentList | filter: ctrl.searchQuery">
+                    <td>{{ equipment.name }}</td>
+                    <td>{{ equipment.status }}</td>
+                    <td><button ng-click="ctrl.deleteEquipment($index)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gym Management</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="equipment.js"></script>
+</body>
+</html>

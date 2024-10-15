@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="membershipApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-animate.min.js"></script>
+    <script src="membership.js"></script>
+</head>
+<body ng-controller="MembershipController as ctrl">
+    <header>
+        <h1>Gym Management</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="equipment.html">Equipment</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Membership Management</h1>
+        <form ng-submit="ctrl.saveMembership()">
+            <label for="plan">Plan:</label>
+            <select id="plan" ng-model="ctrl.newMembership.plan" name="plan" required>
+                <option value="monthly">Monthly</option>
+                <option value="annual">Annual</option>
+            </select>
+            <br>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" ng-model="ctrl.newMembership.startDate" name="startDate" required>
+            <br>
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" ng-model="ctrl.newMembership.endDate" name="endDate" required>
+            <br>
+            <button type="submit">Save Membership</button>
+        </form>
+
+        <h3>Membership List</h3>
+        <input type="text" ng-model="ctrl.searchQuery" placeholder="Search memberships">
+        <table id="membership-table">
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="membership in ctrl.memberships | filter:ctrl.searchQuery" class="fade">
+                    <td>{{ membership.plan }}</td>
+                    <td>{{ membership.startDate | date:'shortDate' }}</td>
+                    <td>{{ membership.endDate | date:'shortDate' }}</td>
+                    <td>
+                        <button ng-click="ctrl.deleteMembership($index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gym Management</p>
+    </footer>
+</body>
+</html>

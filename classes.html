@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="classScheduleApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Schedule</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="ClassScheduleController as ctrl">
+    <header>
+        <h1>Gym Management</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="equipment.html">Equipment</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Class Schedule</h1>
+        <form ng-submit="ctrl.addClass()">
+            <label for="class-name">Class Name:</label>
+            <input type="text" id="class-name" ng-model="ctrl.newClass.name" required>
+            <label for="instructor">Instructor:</label>
+            <input type="text" id="instructor" ng-model="ctrl.newClass.instructor" required>
+            <label for="schedule">Schedule:</label>
+            <input type="text" id="schedule" ng-model="ctrl.newClass.schedule" required>
+            <button type="submit">Add Class</button>
+        </form>
+        
+        <h3>Search Classes</h3>
+        <input type="text" ng-model="ctrl.searchQuery" placeholder="Search classes">
+
+        <h3>Class List</h3>
+        <table id="class-table">
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th>Instructor</th>
+                    <th>Schedule</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="class in ctrl.classes | filter:ctrl.searchQuery">
+                    <td>{{ class.name }}</td>
+                    <td>{{ class.instructor }}</td>
+                    <td>{{ class.schedule }}</td>
+                    <td>
+                        <button ng-click="ctrl.bookClass($index)">Book</button>
+                        <button ng-click="ctrl.deleteClass($index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gym Management</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="classes.js"></script>
+</body>
+</html>

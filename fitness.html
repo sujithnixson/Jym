@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="fitnessApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Tracking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body ng-controller="FitnessController as ctrl">
+    <header>
+        <h1>Gym Management</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="classes.html">Classes</a></li>
+                <li><a href="attendance.html">Attendance</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+                <li><a href="notifications.html">Notifications</a></li>
+                <li><a href="equipment.html">Equipment</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <h1>Fitness Tracking</h1>
+        <form ng-submit="ctrl.trackFitness()">
+            <label for="member-id">Member ID:</label>
+            <input type="text" id="member-id" ng-model="ctrl.newFitness.memberId" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" ng-model="ctrl.newFitness.date" required>
+            <label for="exercise">Exercise:</label>
+            <input type="text" id="exercise" ng-model="ctrl.newFitness.exercise" required>
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" ng-model="ctrl.newFitness.duration" required>
+            <button type="submit">Track Fitness</button>
+        </form>
+        
+        <h3>Search Fitness Records</h3>
+        <input type="text" ng-model="ctrl.searchQuery" placeholder="Search records">
+        
+        <h3>Fitness Records</h3>
+        <table id="fitness-table">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Date</th>
+                    <th>Exercise</th>
+                    <th>Duration</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in ctrl.fitnessRecords | filter:ctrl.searchQuery">
+                    <td>{{ record.memberId }}</td>
+                    <td>{{ record.date | date:'shortDate' }}</td>
+                    <td>{{ record.exercise }}</td>
+                    <td>{{ record.duration }}</td>
+                    <td>
+                        <button ng-click="ctrl.deleteFitness($index)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    <footer>
+        <p>&copy; 2024 Gym Management</p>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="fitness.js"></script>
+</body>
+</html>
